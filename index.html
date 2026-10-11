@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>公众号横向滑动图排版模板（Demo）</title>
+</head>
+<body>
+<section style="max-width:677px; margin:0 auto; padding:20px 16px; font-size:15px; color:#3F3A37; line-height:1.9; letter-spacing:0.5px;">
+
+  <!-- ========== 文章标题区（text-align 只写在 p/h 标签上，不要写在 section 容器上） ========== -->
+  <p style="text-align:center; font-size:12px; color:#B54A33; margin:0 0 10px;">YOUR BRAND · 专栏</p>
+  <h1 style="text-align:center; font-size:22px; color:#2E2A27; font-weight:bold; line-height:1.5; margin:0;">这里是文章标题<br>可以分两行</h1>
+  <p style="text-align:center; font-size:13px; color:#8C8580; margin:14px 0 26px; padding-bottom:16px; border-bottom:1px solid #F0E6DF;">这里是副标题 / 一句话导读</p>
+
+  <!-- ========== 正文文字段落 ========== -->
+  <p style="margin:0 0 18px;">这里是正文段落。把你的文字写在这里。本模板演示公众号图文里最实用的「图片左右滑动查看」排版：一组图片横向排开，默认只露出第一张的大部分，读者用手指左右滑动即可查看更多，非常适合多图展示（截图合集、作品集、步骤演示等场景）。</p>
+
+  <!-- ========== 横向滑动图片组件 · 第 1 组 ==========
+       关键点（勿改，均为微信兼容写法）：
+       1. 容器用 white-space:nowrap + font-size:0，禁止用 display:flex（微信编辑器粘贴时会剥掉 flex，滑动失效）
+       2. 图片用 display:inline-block 定宽，宽度 78% 故意露出下一张的一部分，暗示可滑动
+       3. 图片必须 max-width 封顶（本模板 300px），避免移动端视口溢出告警
+       4. 不用 box-shadow / 渐变（微信深色模式检测可能误报为渐变） -->
+  <section style="overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0; padding:2px 0 6px;">
+    <img src="images/demo-1.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字1"/>
+    <img src="images/demo-2.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字2"/>
+    <img src="images/demo-3.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字3"/>
+    <img src="images/demo-4.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:0;" alt="说明文字4"/>
+  </section>
+  <p style="text-align:center; font-size:12px; color:#B54A33; margin:6px 0 18px;">◂ 左右滑动查看更多 ▸</p>
+
+  <!-- ========== 更多正文 ========== -->
+  <p style="margin:0 0 18px;">你可以复制这个滑动组件的代码，在文章里放任意多组。每组只需要一个滑动容器 + 若干张 inline-block 图片。</p>
+
+  <!-- ========== 横向滑动图片组件 · 第 2 组 ========== -->
+  <section style="overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0; padding:2px 0 6px;">
+    <img src="images/demo-4.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="示例4"/>
+    <img src="images/demo-2.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="示例2"/>
+    <img src="images/demo-1.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:0;" alt="示例1"/>
+  </section>
+  <p style="text-align:center; font-size:12px; color:#B54A33; margin:6px 0 18px;">◂ 左右滑动查看更多 ▸</p>
+
+  <!-- ========== 文末引导区 ========== -->
+  <p style="text-align:center; color:#D8C4B8; margin:32px 0;">· · ·</p>
+  <section style="background:#F9F1EC; border-radius:10px; padding:20px; margin:36px 0 10px; line-height:2;">
+    <p style="text-align:center; font-size:15px; color:#2E2A27; margin:0;">如果这篇文章帮到了你<br>点个<strong style="color:#B54A33;">「在看」</strong>👇</p>
+    <p style="text-align:center; font-size:13px; color:#8C8580; margin:6px 0 0;">关注我，持续更新实用排版技巧</p>
+  </section>
+
+</section>
+</body>
+</html>

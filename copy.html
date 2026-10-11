@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一键复制到公众号（绕过浏览器样式改写）</title>
+</head>
+<body style="margin:0; background:#F9F1EC; font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+  <div style="text-align:center; padding:40px 30px; max-width:460px;">
+    <p style="font-size:15px; color:#B54A33; margin:0 0 8px; font-weight:bold;">公众号图文 · 一键复制工具</p>
+    <h1 style="font-size:22px; color:#2E2A27; margin:0 0 24px;">① 点击复制 → ② 去公众号粘贴</h1>
+    <button id="btn" style="background:#B54A33; color:#fff; border:none; border-radius:12px; padding:16px 48px; font-size:17px; font-weight:bold; cursor:pointer;">📋 一键复制排版内容</button>
+    <p id="status" style="font-size:14px; color:#8C8580; margin:20px 0 0; line-height:1.8;">
+      为什么不直接在页面上 Ctrl+A 全选复制？<br>
+      因为浏览器复制时会重新计算并改写样式<br>
+      （例如 <code>text-align:center</code> 被改成 <code>-webkit-center</code>），<br>
+      微信检测会报「文字对齐异常 · 非标准值」。<br>
+      本按钮通过剪贴板 API 直写原始 HTML 源码，<br>
+      微信收到的就是一份干净的合规代码。
+    </p>
+  </div>
+  <script>
+    // ========== 配置：要复制的页面文件名 ==========
+    var SOURCE = './index.html';
+
+    var btn = document.getElementById('btn');
+    var status = document.getElementById('status');
+    btn.addEventListener('click', async function () {
+      btn.disabled = true;
+      btn.textContent = '⏳ 正在处理…';
+      try {
+        var resp = await fetch(SOURCE + '?t=' + Date.now(), { cache: 'no-store' });
+        var html = await resp.text();
+        // 清除各平台预览系统可能注入的调试属性（不影响正常内容）
+        html = html.replace(/ data-page-node-id="[^"]*"/g, '');
+        // 只取 body 内部作为片段（微信正文不需要完整 html 文档结构）
+        var m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        var frag = m ? m[1] : html;
+        var plain = frag.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([frag], { type: 'text/html' }),
+            'text/plain': new Blob([plain], { type: 'text/plain' })
+          })
+        ]);
+        btn.textContent = '✅ 已复制，去公众号粘贴吧';
+        status.innerHTML = '剪贴板里现在是干净的原始源码。<br>公众号后台新建图文 → Ctrl/Cmd + V 粘贴即可。<br>图片会被微信自动转存到微信图床。<br><b style="color:#B54A33;">若复制失败，请用 Chrome / Edge 打开本页</b>（需要支持剪贴板 API 的浏览器 + https 环境）。';
+      } catch (e) {
+        btn.textContent = '⚠️ 复制失败，见下方说明';
+        status.innerHTML = '错误：' + e.message + '<br>本功能需要 https 页面 + Chrome/Edge 浏览器，<br>并在弹窗中允许页面访问剪贴板。';
+      }
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>

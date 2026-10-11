@@ -3,9 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>公众号横向滑动图排版模板（Demo）</title>
+<title>公众号图片自动轮播排版模板（SVG · 无需JS）</title>
 </head>
 <body>
+
+<!-- 图片公网地址（微信粘贴时会自动抓取/转存，务必是 https 直链） -->
+<!--
+  img1 = https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim
+  img2 = https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim
+  img3 = https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim
+  img4 = https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim
+  img5 = https://img.hadrychen.top/images/tx-cos/20260917184916031.png
+-->
+
 <section style="max-width:677px; margin:0 auto; padding:20px 16px; font-size:15px; color:#3F3A37; line-height:1.9; letter-spacing:0.5px;">
 
   <!-- ========== 文章标题区（text-align 只写在 p/h 标签上，不要写在 section 容器上） ========== -->
@@ -14,30 +24,44 @@
   <p style="text-align:center; font-size:13px; color:#8C8580; margin:14px 0 26px; padding-bottom:16px; border-bottom:1px solid #F0E6DF;">这里是副标题 / 一句话导读</p>
 
   <!-- ========== 正文文字段落 ========== -->
-  <p style="margin:0 0 18px;">这里是正文段落。把你的文字写在这里。本模板演示公众号图文里最实用的「图片左右滑动查看」排版：一组图片横向排开，默认只露出第一张的大部分，读者用手指左右滑动即可查看更多，非常适合多图展示（截图合集、作品集、步骤演示等场景）。</p>
+  <p style="margin:0 0 18px;">这里是正文段落。下面这组图片会在文章里<b>自动左右轮播</b>，读者无需任何操作，无需点击、无需滑动。它完全由 SVG 动画（SMIL）实现，不依赖 JavaScript、不依赖 CSS 样式表，因此可以原样粘贴进公众号后台并保留动效。</p>
 
-  <!-- ========== 横向滑动图片组件 · 第 1 组 ==========
+  <!-- ========== 自动轮播图片组件（SVG · SMIL 动画） ==========
        关键点（勿改，均为微信兼容写法）：
-       1. 容器用 white-space:nowrap + font-size:0，禁止用 display:flex（微信编辑器粘贴时会剥掉 flex，滑动失效）
-       2. 图片用 display:inline-block 定宽，宽度 78% 故意露出下一张的一部分，暗示可滑动
-       3. 图片必须 max-width 封顶（本模板 300px），避免移动端视口溢出告警
-       4. 不用 box-shadow / 渐变（微信深色模式检测可能误报为渐变） -->
-  <section style="overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0; padding:2px 0 6px;">
-    <img src="images/demo-1.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字1"/>
-    <img src="images/demo-2.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字2"/>
-    <img src="images/demo-3.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字3"/>
-    <img src="images/demo-4.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:0;" alt="说明文字4"/>
+       1. 微信会剥掉 <script> / 外链 CSS / ID，所以动效只能用「内联 SVG + SMIL 动画标签」实现
+       2. 动画用 <animateTransform type="translate"> 平移整组图片，实现横向轮播
+       3. 首尾无缝：第一张图在末尾再放一次（第 6 帧），平移到结尾时正好等于开头，循环无跳变
+       4. 停顿+滑动：用 keyTimes 的重复时间点制造「停留 2.4s + 滑动 0.6s」的节奏（dur 总时长 15s）
+       5. 每张图宽度 = viewBox 宽度 600；帧位置 x = 0 / 600 / 1200 / 1800 / 2400 / 3000
+       6. 不用 id / clipPath / 渐变（微信会删 id 导致引用失效） -->
+  <section style="max-width:640px; margin:0 auto; overflow:hidden; border-radius:10px;">
+    <svg viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:block; width:100%; height:auto; border-radius:10px; overflow:hidden;">
+      <g>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" x="0" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim" x="600" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim" x="1200" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim" x="1800" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260917184916031.png" href="https://img.hadrychen.top/images/tx-cos/20260917184916031.png" x="2400" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" x="3000" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
+        <animateTransform attributeName="transform" attributeType="XML" type="translate" begin="0s" dur="15s" repeatCount="indefinite" calcMode="linear"
+          keyTimes="0;0.16;0.2;0.2;0.36;0.4;0.4;0.56;0.6;0.6;0.76;0.8;0.8;0.96;1"
+          values="0 0;0 0;-600 0;-600 0;-600 0;-1200 0;-1200 0;-1200 0;-1800 0;-1800 0;-1800 0;-2400 0;-2400 0;-2400 0;-3000 0"/>
+      </g>
+    </svg>
   </section>
-  <p style="text-align:center; font-size:12px; color:#B54A33; margin:6px 0 18px;">◂ 左右滑动查看更多 ▸</p>
+  <p style="text-align:center; font-size:12px; color:#B54A33; margin:8px 0 18px;">图片自动轮播中 ▸</p>
 
   <!-- ========== 更多正文 ========== -->
-  <p style="margin:0 0 18px;">你可以复制这个滑动组件的代码，在文章里放任意多组。每组只需要一个滑动容器 + 若干张 inline-block 图片。</p>
+  <p style="margin:0 0 18px;">自动轮播适合“氛围图 / 多张并列展示 / 作品集滚动”等场景。如果你更希望读者自己左右滑动查看（互动感更强），可以改用下面这组「手动左右滑动」方案，两种可以混用。</p>
 
-  <!-- ========== 横向滑动图片组件 · 第 2 组 ========== -->
+  <!-- ========== 备选方案：手动左右滑动图片组件（原方案） ==========
+       关键点：容器 white-space:nowrap + font-size:0，图片 inline-block；不用 flex（微信粘贴会剥掉 flex） -->
   <section style="overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0; padding:2px 0 6px;">
-    <img src="images/demo-4.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="示例4"/>
-    <img src="images/demo-2.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="示例2"/>
-    <img src="images/demo-1.jpg" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:0;" alt="示例1"/>
+    <img src="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字1"/>
+    <img src="https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字2"/>
+    <img src="https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字3"/>
+    <img src="https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字4"/>
+    <img src="https://img.hadrychen.top/images/tx-cos/20260917184916031.png" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:0;" alt="说明文字5"/>
   </section>
   <p style="text-align:center; font-size:12px; color:#B54A33; margin:6px 0 18px;">◂ 左右滑动查看更多 ▸</p>
 

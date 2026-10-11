@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>公众号图片自动轮播排版模板（SVG · 无需JS）</title>
+<title>公众号图片左右滑动排版模板</title>
 </head>
 <body>
 
@@ -24,37 +24,12 @@
   <p style="text-align:center; font-size:13px; color:#8C8580; margin:14px 0 26px; padding-bottom:16px; border-bottom:1px solid #F0E6DF;">这里是副标题 / 一句话导读</p>
 
   <!-- ========== 正文文字段落 ========== -->
-  <p style="margin:0 0 18px;">这里是正文段落。下面这组图片会在文章里<b>自动左右轮播</b>，读者无需任何操作，无需点击、无需滑动。它完全由 SVG 动画（SMIL）实现，不依赖 JavaScript、不依赖 CSS 样式表，因此可以原样粘贴进公众号后台并保留动效。</p>
-
-  <!-- ========== 自动轮播图片组件（SVG · SMIL 动画） ==========
-       关键点（勿改，均为微信兼容写法）：
-       1. 微信会剥掉 <script> / 外链 CSS / ID，所以动效只能用「内联 SVG + SMIL 动画标签」实现
-       2. 动画用 <animateTransform type="translate"> 平移整组图片，实现横向轮播
-       3. 首尾无缝：第一张图在末尾再放一次（第 6 帧），平移到结尾时正好等于开头，循环无跳变
-       4. 停顿+滑动：用 keyTimes 的重复时间点制造「停留 2.4s + 滑动 0.6s」的节奏（dur 总时长 15s）
-       5. 每张图宽度 = viewBox 宽度 600；帧位置 x = 0 / 600 / 1200 / 1800 / 2400 / 3000
-       6. 不用 id / clipPath / 渐变（微信会删 id 导致引用失效） -->
-  <section style="max-width:640px; margin:0 auto; overflow:hidden; border-radius:10px;">
-    <svg viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:block; width:100%; height:auto; border-radius:10px; overflow:hidden;">
-      <g>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" x="0" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916230200886.jpg?imageSlim" x="600" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916233225047.jpg?imageSlim" x="1200" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916233821863.jpg?imageSlim" x="1800" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260917184916031.png" href="https://img.hadrychen.top/images/tx-cos/20260917184916031.png" x="2400" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <image xlink:href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" href="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" x="3000" y="0" width="600" height="800" preserveAspectRatio="xMidYMid slice"/>
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" begin="0s" dur="15s" repeatCount="indefinite" calcMode="linear"
-          keyTimes="0;0.16;0.2;0.2;0.36;0.4;0.4;0.56;0.6;0.6;0.76;0.8;0.8;0.96;1"
-          values="0 0;0 0;-600 0;-600 0;-600 0;-1200 0;-1200 0;-1200 0;-1800 0;-1800 0;-1800 0;-2400 0;-2400 0;-2400 0;-3000 0"/>
-      </g>
-    </svg>
-  </section>
-  <p style="text-align:center; font-size:12px; color:#B54A33; margin:8px 0 18px;">图片自动轮播中 ▸</p>
+  <p style="margin:0 0 18px;">这里是正文段落。下面这组图片可以在文章里<b>左右滑动查看</b>，读者轻轻一划即可浏览多张，既节省纵向空间，又能引导互动。它用微信完全支持的 white-space:nowrap 加 inline-block 实现，不依赖 JavaScript、不依赖 CSS 样式表，可以原样粘贴进公众号后台。</p>
 
   <!-- ========== 更多正文 ========== -->
-  <p style="margin:0 0 18px;">自动轮播适合“氛围图 / 多张并列展示 / 作品集滚动”等场景。如果你更希望读者自己左右滑动查看（互动感更强），可以改用下面这组「手动左右滑动」方案，两种可以混用。</p>
+  <p style="margin:0 0 18px;">左右滑动适合“多图展示 / 作品集 / 案例对比”等场景：单屏只完整显示一张、露出下一张的边角，读者一看就知道可以滑。</p>
 
-  <!-- ========== 备选方案：手动左右滑动图片组件（原方案） ==========
+  <!-- ========== 图片左右滑动组件 ==========
        关键点：容器 white-space:nowrap + font-size:0，图片 inline-block；不用 flex（微信粘贴会剥掉 flex） -->
   <section style="overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0; padding:2px 0 6px;">
     <img src="https://img.hadrychen.top/images/tx-cos/20260916224452102.png?imageSlim" style="display:inline-block; width:78%; max-width:300px; height:auto; vertical-align:top; border-radius:8px; border:1px solid #F0E6DF; margin-right:8px;" alt="说明文字1"/>
